@@ -1,0 +1,55 @@
+#!/bin/bash
+export iplist=$(hostname -I|xargs)
+iparray=($iplist)
+export myip=${iparray[0]}
+
+while [[ ${myip} == "" ]]
+do
+echo "in while loop" >> /tmp/register.log
+  sleep 10
+  export myip=$(hostname -I|xargs)
+done 
+
+date >> /tmp/register.log
+echo "Running register ${myip}." >> /tmp/register.log
+
+# Check to see if we are on a Pi or a VM
+CPUTYPE=`uname -m`
+if [[ $CPUTYPE == "armv7l" ]];
+then
+  DevId=`cat /proc/cpuinfo | grep Serial | awk -F": " '{ print $2 }'`
+  DeviceType="PI"
+else
+  DevId=`sudo dmidecode -t system | grep UUID | sed 's/.*UUID://;s/ //g'`
+  DeviceType="VM"
+fi
+homedir="/home/oracle"
+. ${homedir}/Desktop/RegInfo.txt
+
+echo ${DevId} > ${homedir}/DevId.txt
+chmod 644 ${homedir}/DevId.txt
+echo "ID: ${DevId}"
+SwVersion=`cat ${homedir}/SwVersion.txt`
+
+echo "GroupID: $GroupID"
+echo "DevId: $DevId"
+echo "Name: $Name"
+echo "Description: $Description"
+echo "DeviceType: ${DeviceType}"
+echo "Region $Region"
+echo "City $City"
+echo "Email $ContactEmail"
+echo "SwVersion $SwVersion"
+echo "MyIP $myip"
+curl -v --insecure -X POST -H "city: ${City}" -H "desc: ${Description}" -H "devicetype: ${DeviceType}" -H "devid: ${DevId}" -H "groupid: ${GroupID}" -H "name: ${Name}" -H "region: ${Region}" -H "swversion: ${SwVersion}" -H "email: ${ContactEmail}" -H "hostip: ${myip}" "https://ankioci.det.nsw.edu.au/ords/eduiot/v6_anki/register/"
+
+export GroupIDEsc=$( echo "$GroupID" | sed 's/ /%20/g' )
+echo "curl --insecure -s https://ankioci.det.nsw.edu.au/ords/eduiot/v6_anki/devicePort/${GroupIDEsc}"
+portMinorNumber=`curl --insecure -s "https://ankioci.det.nsw.edu.au/ords/eduiot/v6_anki/devicePort/${GroupIDEsc}" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["items"][0]["port"]'`
+echo "Port Number: ${portMinorNumber}"
+basePort="${portMinorNumber}"
+echo "${basePort}" > ${homedir}/basePort.txt
+
+# Update git
+cd /home
+git pull >> /tmp/git.log

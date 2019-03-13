@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Oracle - Anki Demo</title>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="logtail1.js"></script>
+        <link href="logtail.css" rel="stylesheet" type="text/css">
+        <script>
+          function getSpeedoHostPort() {
+            var thisHost = decodeURIComponent(window.location.href);
+            var l = document.createElement("a");
+            l.href = thisHost;
+            var uiport = l.port;
+            return l.protocol + "//" + l.hostname + ":7800";
+          }
+          function getServerHostPort() {
+            var thisHost = decodeURIComponent(window.location.href);
+            var l = document.createElement("a");
+            l.href = thisHost;
+            var uiport = l.port;
+            return l.protocol + "//" + l.hostname + ":7801";
+          }
+          function getDriveHostPort() {
+            var thisHost = decodeURIComponent(window.location.href);
+            var l = document.createElement("a");
+            l.href = thisHost;
+            var uiport = l.port;
+            return l.protocol + "//" + l.hostname + ":7901";
+          }
+          function getFlow1HostPort() {
+            var thisHost = decodeURIComponent(window.location.href);
+            var l = document.createElement("a");
+            l.href = thisHost;
+            var uiport = l.port;
+            return l.protocol + "//" + l.hostname + ":8001";
+          }
+          function getFlow2HostPort() {
+            var thisHost = decodeURIComponent(window.location.href);
+            var l = document.createElement("a");
+            l.href = thisHost;
+            var uiport = l.port;
+            return l.protocol + "//" + l.hostname + ":8002";
+          }
+          function getFlow3HostPort() {
+            var thisHost = decodeURIComponent(window.location.href);
+            var l = document.createElement("a");
+            l.href = thisHost;
+            var uiport = l.port;
+            return l.protocol + "//" + l.hostname + ":8003";
+          }
+          function getFlow4HostPort() {
+            var thisHost = decodeURIComponent(window.location.href);
+            var l = document.createElement("a");
+            l.href = thisHost;
+            var uiport = l.port;
+            return l.protocol + "//" + l.hostname + ":8004";
+          }
+
+          function runAction(actionName) {
+            var url = getServerHostPort()+actionName;
+            $.get( url, function( data ) {});
+          }
+
+          function restAPILink() {
+            var a = document.createElement('a');
+            var linkText = document.createTextNode(getServerHostPort());
+            a.appendChild(linkText);
+            a.title = "REST API Link";
+            a.href = getServerHostPort();
+            a.setAttribute('target', '_blank');
+            var sl = document.getElementById("restAPILink");
+            sl.appendChild(a);
+          }
+          function driveLink() {
+            var url=getDriveHostPort()+"/";
+            var a = document.createElement('a');
+            var linkText = document.createTextNode(url);
+            a.appendChild(linkText);
+            a.title = "Drive Link";
+            a.href = url;
+            a.setAttribute('target', '_blank');
+            var sl = document.getElementById("driveLink");
+            sl.appendChild(a);
+          }
+          function flow1Link() {
+            var url=getFlow1HostPort()+"/";
+            var a = document.createElement('a');
+            var linkText = document.createTextNode(url);
+            a.appendChild(linkText);
+            a.title = "Flow1 Link";
+            a.href = url;
+            a.setAttribute('target', '_blank');
+            var sl = document.getElementById("flow1Link");
+            sl.appendChild(a);
+          }
+          function flow2Link() {
+            var url=getFlow2HostPort()+"/";
+            var a = document.createElement('a');
+            var linkText = document.createTextNode(url);
+            a.appendChild(linkText);
+            a.title = "Flow2 Link";
+            a.href = url;
+            a.setAttribute('target', '_blank');
+            var sl = document.getElementById("flow2Link");
+            sl.appendChild(a);
+          }
+          function flow3Link() {
+            var url=getFlow3HostPort()+"/";
+            var a = document.createElement('a');
+            var linkText = document.createTextNode(url);
+            a.appendChild(linkText);
+            a.title = "Flow3 Link";
+            a.href = url;
+            a.setAttribute('target', '_blank');
+            var sl = document.getElementById("flow3Link");
+            sl.appendChild(a);
+          }
+          function flow4Link() {
+            var url=getFlow4HostPort()+"/";
+            var a = document.createElement('a');
+            var linkText = document.createTextNode(url);
+            a.appendChild(linkText);
+            a.title = "Flow4 Link";
+            a.href = url;
+            a.setAttribute('target', '_blank');
+            var sl = document.getElementById("flow4Link");
+            sl.appendChild(a);
+          }
+          function speedosLink() {
+            var url=getSpeedoHostPort()+"/";
+            var a = document.createElement('a');
+            var linkText = document.createTextNode(url);
+            a.appendChild(linkText);
+            a.title = "Speedometers Link";
+            a.href = url;
+            a.setAttribute('target', '_blank');
+            var sl = document.getElementById("speedosLink");
+            sl.appendChild(a);
+          }
+        </script>
+    </head>
+    <body background="bg.jpg">
+        <img src="oracle-anki.png">
+        <hr/>
+        <table>
+          <tr>
+            <td valign='top'>
+              <h3>Commands</h3>
+              <button type="submit" onclick="runAction('/exit')">Restart Server</button>
+              <button type="submit" onclick="window.open('reginfo.php')">Update RegInfo</button>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">
+              <h3>Local Links</h3>
+              <table>
+                <tr><td>Drive UI: </td><td>
+                  <div id='driveLink'"> <script>driveLink();</script> </div>
+                </td></tr>
+                <tr><td>Oracle/Anki Learning System: </td><td>
+                  <a href='https://edu.opcau.com' target='_blank'>https://edu.opcau.com</a>
+                </td></tr>
+                <tr><td>Documentation: </td><td>
+                  <a href='tbd' target='_blank'>TBD</a>
+                </td></tr>
+                <tr><td>Flow UI #1: </td><td>
+                  <div id='flow1Link'"> <script>flow1Link();</script> </div>
+                </td></tr>
+                <tr><td>Flow UI #2: </td><td>
+                  <div id='flow2Link'"> <script>flow2Link();</script> </div>
+                </td></tr>
+                <tr><td>Flow UI #3: </td><td>
+                  <div id='flow3Link'"> <script>flow3Link();</script> </div>
+                </td></tr>
+                <tr><td>Flow UI #4: </td><td>
+                  <div id='flow4Link'"> <script>flow4Link();</script> </div>
+                </td></tr>
+                <tr><td>Oracle Cloud Dashboards: </td><td>
+                  <div id='oracleCloud'"><a href='tbd' target='_blank'>TBD</a></div>
+                </td></tr>
+                <tr><td>Speedometers: </td><td>
+                  <div id='speedosLink'"> <script>speedosLink();</script> </div>
+                </td></tr>
+                <tr><td>REST API: </td><td>
+                  <div id='restAPILink'"> <script>restAPILink();</script> </div>
+                </td></tr>
+              </table>
+            </td>
+            <td valign="top">
+              <h3>Oracle/Anki Server Log</h3>
+<div id="logdiv1" style="width: 500px;height: 400px;background: white; overflow:auto;border: 2px solid #43AD21; border-radius:15px;"><pre id="data1">Loading...</pre></div>
+            </td>
+          </tr>
+        </table>
+    </body>
+</html>

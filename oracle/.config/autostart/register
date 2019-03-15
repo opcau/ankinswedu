@@ -41,11 +41,10 @@ echo "City $City"
 echo "Email $ContactEmail"
 echo "SwVersion $SwVersion"
 echo "MyIP $myip"
-curl -v --insecure -X POST -H "city: ${City}" -H "desc: ${Description}" -H "devicetype: ${DeviceType}" -H "devid: ${DevId}" -H "groupid: ${GroupID}" -H "name: ${Name}" -H "region: ${Region}" -H "swversion: ${SwVersion}" -H "email: ${ContactEmail}" -H "hostip: ${myip}" "https://ankioci.det.nsw.edu.au/ords/eduiot/v6_anki/register/"
+curl -v --insecure -X POST -H "city: ${City}" -H "desc: ${Description}" -H "devicetype: ${DeviceType}" -H "devid: ${DevId}" -H "groupid: ${GroupID}" -H "name: ${Name}" -H "region: ${Region}" -H "swversion: ${SwVersion}" -H "email: ${ContactEmail}" -H "hostip: ${myip}" "https://ankioci.education.nsw.gov.au/ords/eduiot/v6_anki/register/"
 
 export GroupIDEsc=$( echo "$GroupID" | sed 's/ /%20/g' )
-echo "curl --insecure -s https://ankioci.det.nsw.edu.au/ords/eduiot/v6_anki/devicePort/${GroupIDEsc}"
-portMinorNumber=`curl --insecure -s "https://ankioci.det.nsw.edu.au/ords/eduiot/v6_anki/devicePort/${GroupIDEsc}" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["items"][0]["port"]'`
+portMinorNumber=`curl --insecure -s "https://ankioci.education.nsw.gov.au/ords/eduiot/v6_anki/devicePort/${GroupIDEsc}" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["items"][0]["port"]'`
 echo "Port Number: ${portMinorNumber}"
 basePort="${portMinorNumber}"
 echo "${basePort}" > ${homedir}/basePort.txt

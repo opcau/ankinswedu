@@ -28,6 +28,6 @@
     "node-uuid": "^1.4.8",
     "query-string": "^6.1.0",
     "request": "^2.81.0",
-    "url-parse": "^1.5.8"
+    "url-parse": "^1.5.9"
   }
 }

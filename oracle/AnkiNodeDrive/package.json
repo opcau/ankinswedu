@@ -18,7 +18,7 @@
   "author": "John Graves",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^2.6.4",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "date-format": "^1.2.0",
